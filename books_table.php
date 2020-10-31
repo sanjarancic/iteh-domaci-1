@@ -1,6 +1,8 @@
-<?php include 'obrada.php' ?>
+<?php include 'Database.php' ?>
 
 <?php
+$db = new Database('bookstore');
+
 if (isset($_GET['order_by'])) {
     $order_by = $_GET['order_by'];
 } else {
@@ -40,6 +42,7 @@ $active_sort_class = "class='sort {$order_dir}'";
             <th onclick="changeSort('authors')" <?php if ($order_by == 'authors')  echo $active_sort_class ?>>Authors</th>
             <th onclick="changeSort('date_published')" <?php if ($order_by == 'date_published') echo $active_sort_class ?>>Date Published</th>
             <th onclick="changeSort('genre')" <?php if ($order_by == 'genre') echo $active_sort_class ?>>Genre</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -47,12 +50,16 @@ $active_sort_class = "class='sort {$order_dir}'";
         $db->ExecuteQuery($query);
         while ($red = $db->getResult()->fetch_object()) :
         ?>
-            <tr>
+            <tr id="<?php echo "row-{$red->id}" ?>">
                 <td><?php echo $red->id; ?></td>
                 <td><?php echo $red->name; ?></td>
                 <td><?php echo $red->authors; ?></td>
                 <td><?php echo $red->date_published; ?></td>
                 <td><?php echo $red->genre ? $red->genre : '--'; ?></td>
+                <td>
+                    <button onclick="editBook(<?php echo $red->id ?>)" class="btn btn-light">Edit</button>
+                    <button onclick="deleteBook(<?php echo $red->id ?>)" class="btn btn-danger">Delete</button>
+                </td>
             </tr>
         <?php endwhile; ?>
     </tbody>
