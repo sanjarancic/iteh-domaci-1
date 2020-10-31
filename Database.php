@@ -69,7 +69,7 @@ class Database
             $q.='('.$rows.')';
         }
         $q.=" VALUES($query_values)";
-        // echo($q);
+        
         if($this->ExecuteQuery($q)){
             return true;
         }else{

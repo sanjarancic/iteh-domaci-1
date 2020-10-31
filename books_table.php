@@ -30,6 +30,8 @@ $query = "SELECT books.*, genre.name as genre
 $active_sort_class = "class='sort {$order_dir}'";
 ?>
 
+<?php include 'add_book_modal.php' ?>
+
 <form action="" method="get">
     <input type="text" name="query" value="<?php echo $where_clause ?>" class="form-control" placeholder="Search">
 </form>

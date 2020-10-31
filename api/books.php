@@ -14,4 +14,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
         echo "Unable to delete resource";
         exit();
     }
+} else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $values = [
+        "'".$_POST['name']."'",
+        "'".$_POST['authors']."'",
+        "'".$_POST['date_published']."'",
+        "'".$_POST['genre_id']."'"
+    ];
+
+    if ($db->insert('books', 'name,authors,date_published,genre_id', $values)) {
+        http_response_code(201);
+        echo "Created";
+        exit();
+    } else {
+        http_response_code(400);
+        echo "Unable to create";
+        exit();
+    }
 }
