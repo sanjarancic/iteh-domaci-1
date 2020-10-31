@@ -1,0 +1,32 @@
+
+th {
+    cursor: pointer;
+}
+
+.sort {
+    position: relative;
+}
+
+th:hover .sort::after {
+    opacity: 0.7;
+}
+
+.sort::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sort.desc::after {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid black;
+}
+
+.sort.asc::after {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
+}
