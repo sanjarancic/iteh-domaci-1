@@ -30,3 +30,7 @@ th:hover .sort::after {
     border-right: 5px solid transparent;
     border-top: 5px solid black;
 }
+
+.hidden {
+    display: none;
+}

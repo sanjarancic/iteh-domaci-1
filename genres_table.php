@@ -7,6 +7,7 @@ $query = "SELECT *
 ?>
 
 <?php include 'add_genre_modal.php' ?>
+<?php include 'edit_genre_modal.php' ?>
 
 <form action="" method="get">
     <input type="text" name="query" value="<?php echo $where_clause ?>" class="form-control" placeholder="Search">
@@ -25,11 +26,11 @@ $query = "SELECT *
         $db->ExecuteQuery($query);
         while ($red = $db->getResult()->fetch_object()) :
         ?>
-            <tr id="<?php echo "genre-row-{$red->id}" ?>">
+            <tr id="<?php echo "genre-row-{$red->id}" ?>" data-value="<?php echo  htmlspecialchars(json_encode($red), ENT_QUOTES, 'UTF-8') ?>">
                 <td><?php echo $red->id; ?></td>
                 <td><?php echo $red->name; ?></td>
                 <td>
-                    <button onclick="editGenre(<?php echo $red->id ?>)" class="btn btn-light">Edit</button>
+                    <button onclick="openEditGenreModal(<?php echo $red->id ?>)" class="btn btn-light">Edit</button>
                     <button onclick="deleteGenre(<?php echo $red->id ?>)" class="btn btn-danger">Delete</button>
                 </td>
             </tr>

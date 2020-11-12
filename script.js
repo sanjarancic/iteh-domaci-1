@@ -39,6 +39,19 @@ const api = {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
             }
         }).then(parseResponse)
+    },
+    put(path, body) {
+        const params = new URLSearchParams();
+        for (const key in body) {
+            params.append(key, body[key]);
+        }
+
+        console.log(body, params)
+        return fetch(`/domaci1/${path}`, {
+            method: 'PUT', body: params, headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            }
+        }).then(parseResponse)
     }
 }
 
@@ -64,6 +77,34 @@ async function addBook(event) {
     }
 }
 
+function openEditBookModal(id) {
+    const book = JSON.parse(document.querySelector(`#row-${id}`).dataset.value);
+
+    document.forms['editBookForm']['id'].value = book.id;
+    document.forms['editBookForm']['name'].value = book.name;
+    document.forms['editBookForm']['authors'].value = book.authors;
+    document.forms['editBookForm']['date_published'].value = book.date_published;
+    document.forms['editBookForm']['genre_id'].value = book.genre_id;
+    $('#editBookModal').modal('show');
+}
+
+async function editBook(event) {
+    event?.preventDefault();
+
+    try {
+        const formData = new FormData(event.target);
+        const data = {};
+        formData.forEach(function(value, key){
+            data[key] = value;
+        });
+
+        await api.put(`/api/books.php`, data);
+        window.location.reload();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function addGenre(event) {
     event?.preventDefault();
 
@@ -80,6 +121,31 @@ async function deleteGenre(genreId) {
     try {
         await api.delete(`/api/genre.php`, { id: genreId });
         document.querySelector(`#genre-row-${genreId}`)?.remove();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function openEditGenreModal(id) {
+    const genre = JSON.parse(document.querySelector(`#genre-row-${id}`).dataset.value);
+
+    document.forms['editGenreForm']['id'].value = genre.id;
+    document.forms['editGenreForm']['name'].value = genre.name;
+    $('#editGenreModal').modal('show');
+}
+
+async function editGenre(event) {
+    event?.preventDefault();
+
+    try {
+        const formData = new FormData(event.target);
+        const data = {};
+        formData.forEach(function(value, key){
+            data[key] = value;
+        });
+
+        await api.put(`/api/genre.php`, data);
+        window.location.reload();
     } catch (error) {
         console.error(error);
     }

@@ -28,4 +28,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
         echo "Unable to create";
         exit();
     }
+} else if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    parse_str(file_get_contents("php://input"), $put_vars);
+    
+    $values = [
+        "'".$put_vars['name']."'",
+    ];
+
+    if ($db->update('genre', $put_vars['id'], ['name'], $values)) {
+        http_response_code(200);
+        exit();
+    } else {
+        http_response_code(400);
+        echo "Unable to update resource";
+        exit();
+    }
 }

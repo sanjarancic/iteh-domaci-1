@@ -7,6 +7,7 @@ $query = "SELECT books.*, genre.name as genre
 ?>
 
 <?php include 'add_book_modal.php' ?>
+<?php include 'edit_book_modal.php' ?>
 
 <form action="" method="get">
     <input type="text" name="query" value="<?php echo $where_clause ?>" class="form-control" placeholder="Search">
@@ -28,14 +29,14 @@ $query = "SELECT books.*, genre.name as genre
         $db->ExecuteQuery($query);
         while ($red = $db->getResult()->fetch_object()) :
         ?>
-            <tr id="<?php echo "row-{$red->id}" ?>">
+            <tr id="<?php echo "row-{$red->id}" ?>" data-value="<?php echo  htmlspecialchars(json_encode($red), ENT_QUOTES, 'UTF-8') ?>">
                 <td><?php echo $red->id; ?></td>
                 <td><?php echo $red->name; ?></td>
                 <td><?php echo $red->authors; ?></td>
                 <td><?php echo $red->date_published; ?></td>
                 <td><?php echo $red->genre ? $red->genre : '--'; ?></td>
                 <td>
-                    <button onclick="editBook(<?php echo $red->id ?>)" class="btn btn-light">Edit</button>
+                    <button onclick="openEditBookModal(<?php echo $red->id ?>)" class="btn btn-light">Edit</button>
                     <button onclick="deleteBook(<?php echo $red->id ?>)" class="btn btn-danger">Delete</button>
                 </td>
             </tr>
