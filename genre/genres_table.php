@@ -9,10 +9,6 @@ $query = "SELECT *
 <?php include 'add_genre_modal.php' ?>
 <?php include 'edit_genre_modal.php' ?>
 
-<form action="" method="get">
-    <input type="text" name="query" value="<?php echo $where_clause ?>" class="form-control" placeholder="Search">
-</form>
-
 <table class="table">
     <thead>
         <tr>

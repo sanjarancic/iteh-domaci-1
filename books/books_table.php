@@ -9,10 +9,6 @@ $query = "SELECT books.*, genre.name as genre
 <?php include 'add_book_modal.php' ?>
 <?php include 'edit_book_modal.php' ?>
 
-<form action="" method="get">
-    <input type="text" name="query" value="<?php echo $where_clause ?>" class="form-control" placeholder="Search">
-</form>
-
 <table class="table">
     <thead>
         <tr>
