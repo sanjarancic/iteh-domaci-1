@@ -13,8 +13,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
 </head>
 
+<?php
+include 'Database.php';
+
+$db = new Database('bookstore');
+
+if (isset($_GET['order_by'])) {
+    $order_by = $_GET['order_by'];
+} else {
+    $order_by = 'name';
+}
+
+if (isset($_GET['order_dir'])) {
+    $order_dir = $_GET['order_dir'];
+} else {
+    $order_dir = '';
+}
+
+if (isset($_GET['query'])) {
+    $where_clause = $_GET['query'];
+} else {
+    $where_clause = "";
+}
+
+$active_sort_class = "class='sort {$order_dir}'";
+?>
+
 <body>
-    <?php include 'books_table.php' ?>
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Books</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Genres</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <?php include 'books_table.php' ?>
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <?php include 'genres_table.php' ?>
+        </div>
+    </div>
 </body>
 
 </html>

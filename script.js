@@ -63,3 +63,24 @@ async function addBook(event) {
         console.error(error);
     }
 }
+
+async function addGenre(event) {
+    event?.preventDefault();
+
+    try {
+        const formData = new FormData(event.target);
+        await api.post(`/api/genre.php`, formData);
+        window.location.reload();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function deleteGenre(genreId) {
+    try {
+        await api.delete(`/api/genre.php`, { id: genreId });
+        document.querySelector(`#genre-row-${genreId}`)?.remove();
+    } catch (error) {
+        console.error(error);
+    }
+}
